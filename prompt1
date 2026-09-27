@@ -1,0 +1,122 @@
+I have an existing .NET application and an already partially migrated Java application.
+
+The .NET application is the ORIGINAL SOURCE OF TRUTH. It is already verified and running in customer production.
+
+The Java application is intended to replace the .NET application.
+
+Your task at this stage is ONLY to analyze and compare both projects.
+
+DO NOT MODIFY ANY CODE.
+DO NOT FIX ANYTHING.
+DO NOT ADD ANYTHING.
+DO NOT REFACTOR ANYTHING.
+DO NOT ASSUME ANYTHING.
+
+The objective is to determine whether the Java application has completely reproduced the existing .NET application's functionality and behavior.
+
+.NET PROJECT:
+<NET_PROJECT_PATH>
+
+JAVA PROJECT:
+<JAVA_PROJECT_PATH>
+
+First, analyze both projects completely enough to create a migration audit baseline.
+
+Compare:
+
+1. Project/module structure
+2. Classes and interfaces
+3. Methods and method logic
+4. APIs/controllers
+5. Services/business logic
+6. Database access
+7. Entities/models
+8. Configuration
+9. Validation
+10. Exception/error handling
+11. Authentication/authorization
+12. External integrations
+13. Background processing
+14. Scheduled processing
+15. Messaging/event processing
+16. Database migrations
+17. Tests
+
+For every significant .NET component, determine whether an equivalent Java implementation exists.
+
+Do NOT consider something equivalent just because the class or method names are similar.
+
+Trace the actual logic.
+
+Pay particular attention to:
+
+* if/else conditions
+* switch cases
+* loops
+* early returns
+* validations
+* null handling
+* default values
+* calculations
+* data transformations
+* database operations
+* transactions
+* external calls
+* retries
+* timeouts
+* exception handling
+* fallback logic
+* configuration-dependent behavior
+
+The .NET application's actual behavior is the reference.
+
+Do not decide what the application SHOULD do.
+Determine what the existing .NET application ACTUALLY does.
+
+If something cannot be verified from the source/configuration/tests, mark it as:
+
+UNKNOWN — REQUIRES VERIFICATION
+
+Do not make assumptions.
+
+Create an audit directory:
+
+<migration-audit-directory>
+
+Create these documents:
+
+01_PROJECT_INVENTORY.md
+02_DOTNET_TO_JAVA_TRACEABILITY.md
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+
+For each confirmed difference, record:
+
+* ID
+* category
+* .NET location
+* Java location
+* .NET behavior
+* Java behavior
+* exact difference
+* impact
+* evidence
+
+Use these statuses:
+
+MATCH
+PARTIAL
+MISSING
+DIFFERENT
+UNKNOWN
+
+IMPORTANT:
+
+Do not fix any gaps yet.
+
+Do not modify either application.
+
+The output of this task must be an AUDIT ONLY.
+
+Do not claim that the migration is complete unless the evidence proves it.
