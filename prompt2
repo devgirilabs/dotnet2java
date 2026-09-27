@@ -1,0 +1,164 @@
+Continue the migration audit.
+
+Do NOT modify any source code.
+Do NOT fix any gaps.
+Do NOT add functionality.
+Do NOT refactor.
+
+The previous audit documents already exist under:
+
+<migration-audit-directory>
+
+The .NET application is the source of truth.
+The Java application is the partially migrated target.
+
+Now perform a DEEP METHOD-LEVEL AND BUSINESS-LOGIC COMPARISON.
+
+The purpose is to find functionality that may have been missed even when a Java class or method already exists.
+
+For every significant .NET business/service method that has a Java counterpart:
+
+1. Read the complete .NET method.
+2. Read the complete Java counterpart.
+3. Trace methods called by both implementations when necessary.
+4. Compare the actual execution logic.
+
+Check every:
+
+* if condition
+* else branch
+* switch case
+* loop
+* early return
+* validation
+* null check
+* empty check
+* default value
+* calculation
+* conversion
+* mapping
+* filtering
+* sorting
+* collection handling
+* database operation
+* transaction
+* external call
+* retry
+* timeout
+* exception
+* catch block
+* fallback
+* state change
+* configuration-dependent behavior
+
+Do not assume two pieces of code are equivalent because they look similar.
+
+For example, if .NET has:
+
+condition A
+-> operation X
+condition B
+-> operation Y
+otherwise
+-> operation Z
+
+and Java only implements X and Y, report Z as missing.
+
+Also check for behavior hidden in:
+
+* helper methods
+* utility classes
+* extension methods
+* base classes
+* interfaces
+* overridden methods
+* callbacks
+* delegates
+* event handlers
+* middleware
+* filters
+* attributes
+* dependency injection registrations
+
+Trace the actual call chain when required.
+
+IMPORTANT:
+
+Do not only compare method names or class names.
+
+Compare behavior.
+
+==================================================
+OUTPUT
+======
+
+Create:
+
+<migration-audit-directory>/06_BUSINESS_LOGIC_DEEP_AUDIT.md
+
+For every finding use:
+
+ID:
+BL-GAP-XXXX
+
+.NET LOCATION:
+file/class/method
+
+JAVA LOCATION:
+file/class/method
+
+.NET BEHAVIOR:
+Describe exactly what the .NET code does.
+
+JAVA BEHAVIOR:
+Describe exactly what the Java code does.
+
+DIFFERENCE:
+Describe the exact behavioral difference.
+
+IMPACT:
+Describe when this difference occurs.
+
+EVIDENCE:
+Reference the relevant source code.
+
+STATUS:
+CONFIRMED GAP / MATCH / UNKNOWN
+
+==================================================
+IMPORTANT
+=========
+
+Do not fix anything.
+
+Do not change either project.
+
+Do not assume missing behavior.
+
+If you cannot establish equivalence, mark:
+
+UNKNOWN — REQUIRES VERIFICATION
+
+At the end, update:
+
+<migration-audit-directory>/03_GAP_REGISTER.md
+
+with ONLY newly confirmed gaps.
+
+Also update:
+
+<migration-audit-directory>/04_UNKNOWN_REGISTER.md
+
+with newly discovered unknowns.
+
+Do not remove existing findings from those documents.
+
+Finally provide a short summary:
+
+* methods compared
+* methods with confirmed matches
+* partial implementations
+* missing implementations
+* different implementations
+* unknowns
+* newly discovered gaps
