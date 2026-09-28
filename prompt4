@@ -1,0 +1,136 @@
+API AND INTERFACE AUDIT
+PATHS
+
+.NET PROJECT ROOT:
+
+<ENTER_ABSOLUTE_PATH_TO_DOTNET_PROJECT>
+
+JAVA PROJECT ROOT:
+
+<ENTER_ABSOLUTE_PATH_TO_JAVA_PROJECT>
+
+MIGRATION AUDIT DIRECTORY:
+
+<ENTER_ABSOLUTE_PATH_TO_EXISTING_MIGRATION_AUDIT_DIRECTORY>
+EXISTING AUDIT DOCUMENTS
+
+Read:
+
+01_PROJECT_INVENTORY.md
+02_DOTNET_TO_JAVA_TRACEABILITY.md
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+06_BUSINESS_LOGIC_DEEP_AUDIT.md
+TASK
+
+Perform a complete API and interface compatibility audit.
+
+The .NET API/interface behavior is the reference.
+
+Compare every externally exposed or internally consumed contract between .NET and Java.
+
+Identify:
+
+REST endpoints
+HTTP methods
+URLs/paths
+path parameters
+query parameters
+request bodies
+request DTOs
+response DTOs
+headers
+content types
+serialization
+deserialization
+status codes
+validation
+required fields
+optional fields
+null handling
+empty handling
+default values
+error responses
+exception-to-response mapping
+pagination
+filtering
+sorting
+ordering
+authentication requirements
+authorization requirements
+idempotency behavior where relevant
+versioning
+backward compatibility
+callbacks
+webhooks
+internal interfaces
+generated clients/contracts where applicable
+
+For every API compare:
+
+existence
+HTTP method
+URL
+request contract
+response contract
+field names
+field types
+nullable behavior
+default behavior
+validation
+authentication
+authorization
+success status
+failure status
+error payload
+exception behavior
+business logic invoked
+side effects
+transaction behavior
+external calls
+serialization behavior
+
+Check both directions:
+
+.NET API missing in Java
+Java API not present in .NET
+same API but different behavior
+same API but incompatible request/response contract
+
+Do not classify something as MATCH merely because the endpoint exists.
+
+Use:
+
+MATCH
+PARTIAL
+MISSING
+DIFFERENT
+UNKNOWN
+OUTPUT
+
+Create:
+
+07_API_INTERFACE_AUDIT.md
+
+Update:
+
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+
+For every gap provide exact evidence.
+
+Do not change source, tests, configuration, dependencies, build files, or API contracts.
+
+Final response must summarize:
+
+total APIs/interfaces identified
+mapped APIs
+missing APIs
+different contracts
+different behavior
+unknowns
+incomplete areas
+critical API gaps
+confirmation that no changes were made
