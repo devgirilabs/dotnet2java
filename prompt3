@@ -1,4 +1,4 @@
-VALIDATE BUSINESS LOGIC AUDIT
+VALIDATE BUSINESS LOGIC AND DATABASE LIFECYCLE AUDIT
 PATHS
 
 .NET PROJECT ROOT:
@@ -28,102 +28,95 @@ Validate the completeness and correctness of the business-logic audit.
 
 Do not fix any issue.
 
-Independently inspect source code wherever necessary.
+Independently inspect source code wherever required.
 
-Verify that the previous audit actually covered:
+Specifically validate that the previous audit covered:
 
-controllers
-services
-business services
-application services
-managers
-handlers
-processors
-workflows
-validators
-repositories
-integrations
-events
-messages
-scheduled processing
-background processing
+Migration
+migration start
+version detection
+version comparison
+migration selection
+migration ordering
+dependencies
+preconditions
+SQL/script execution
+data transformation
+validation
+completion
+version recording
+rollback
+recovery
+retry
+resume
+partial migration
+Purging/cleanup
+retention rules
+purge selection
+deletion criteria
+batch processing
+deletion ordering
+cleanup
+archival
+partial purge
+retry
+failure handling
+completion state
+Database lifecycle
+creation
+initialization
+schema upgrades
+validation
+state management
+database selection
+database version management
 
-Verify method mappings.
+Validate:
 
-Check whether any MATCH classification was made without sufficient evidence.
-
-Verify:
-
-success paths
-validation failures
+method mappings
+branches
 null handling
-empty handling
-missing data
-invalid data
-duplicates
-database failures
-external failures
-timeouts
-exceptions
-retries
-fallbacks
-authorization failures
-configuration variations
-feature flags
-async behavior
-event processing
-message processing
-state transitions
+defaults
+calculations
+transformations
+SQL behavior
+transactions
+locking
+error paths
+external dependencies
+configuration
+scheduling
+background processing
+authorization
 
-Verify dependency tracing through:
-
-helpers
-utilities
-base classes
-inherited methods
-interfaces
-implementations
-overrides
-callbacks
-event handlers
-middleware
-filters
-interceptors
-dependency injection
-shared components
-
-Specifically look for:
-
-False positives
-
-Cases where a reported Java gap actually exists elsewhere in:
+Check for false positives caused by:
 
 inheritance
 another implementation
-shared module
-configuration
-framework behavior
-generated code
-common utility
+shared modules
 dependency injection
-Missed gaps
+configuration
+generated code
+framework behavior
+database scripts
+stored procedures
+migration tooling
 
-Cases where:
+Check for missed gaps:
 
-.NET has behavior not implemented in Java
-Java implementation behaves differently
-an error path differs
-a null/default behavior differs
-a transformation differs
-a calculation differs
-a DB operation differs
-an external call differs
-a state transition differs
-a Java-only behavior was introduced
+.NET migration behavior missing in Java
+.NET purge behavior missing in Java
+Java behavior differing from .NET
+different retention rules
+different migration ordering
+different transaction behavior
+different rollback/recovery
+different retry/resume behavior
+different batch processing
+different error handling
+different database state transitions
 
-Do not remove a previous finding without documenting why the evidence disproves it.
-
-OUTPUT
+Do not remove a finding without documenting why evidence disproves it.
 
 Update:
 
@@ -135,35 +128,12 @@ Update:
 Final report must contain:
 
 A. Audit coverage
-
-What was actually examined.
-
 B. Confirmed gaps
-
-Only evidence-backed gaps.
-
 C. Unknown/unverified areas
-
-Anything that cannot be proven.
-
 D. Missed audit areas
-
-Anything that the previous audit did not cover.
-
 E. Possible false positives
-
-Findings that require reconciliation.
-
 F. Possible missed gaps
-
-Newly discovered concerns.
-
 G. Additional audit required
-
-State exactly what remains incomplete.
-
 H. Code-change confirmation
-
-Confirm that no source, test, configuration, dependency, or build files were changed.
 
 Do not fix anything.
