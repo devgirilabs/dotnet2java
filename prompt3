@@ -1,0 +1,169 @@
+VALIDATE BUSINESS LOGIC AUDIT
+PATHS
+
+.NET PROJECT ROOT:
+
+<ENTER_ABSOLUTE_PATH_TO_DOTNET_PROJECT>
+
+JAVA PROJECT ROOT:
+
+<ENTER_ABSOLUTE_PATH_TO_JAVA_PROJECT>
+
+MIGRATION AUDIT DIRECTORY:
+
+<ENTER_ABSOLUTE_PATH_TO_EXISTING_MIGRATION_AUDIT_DIRECTORY>
+EXISTING AUDIT DOCUMENTS
+
+Read:
+
+01_PROJECT_INVENTORY.md
+02_DOTNET_TO_JAVA_TRACEABILITY.md
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+06_BUSINESS_LOGIC_DEEP_AUDIT.md
+TASK
+
+Validate the completeness and correctness of the business-logic audit.
+
+Do not fix any issue.
+
+Independently inspect source code wherever necessary.
+
+Verify that the previous audit actually covered:
+
+controllers
+services
+business services
+application services
+managers
+handlers
+processors
+workflows
+validators
+repositories
+integrations
+events
+messages
+scheduled processing
+background processing
+
+Verify method mappings.
+
+Check whether any MATCH classification was made without sufficient evidence.
+
+Verify:
+
+success paths
+validation failures
+null handling
+empty handling
+missing data
+invalid data
+duplicates
+database failures
+external failures
+timeouts
+exceptions
+retries
+fallbacks
+authorization failures
+configuration variations
+feature flags
+async behavior
+event processing
+message processing
+state transitions
+
+Verify dependency tracing through:
+
+helpers
+utilities
+base classes
+inherited methods
+interfaces
+implementations
+overrides
+callbacks
+event handlers
+middleware
+filters
+interceptors
+dependency injection
+shared components
+
+Specifically look for:
+
+False positives
+
+Cases where a reported Java gap actually exists elsewhere in:
+
+inheritance
+another implementation
+shared module
+configuration
+framework behavior
+generated code
+common utility
+dependency injection
+Missed gaps
+
+Cases where:
+
+.NET has behavior not implemented in Java
+Java implementation behaves differently
+an error path differs
+a null/default behavior differs
+a transformation differs
+a calculation differs
+a DB operation differs
+an external call differs
+a state transition differs
+a Java-only behavior was introduced
+
+Do not remove a previous finding without documenting why the evidence disproves it.
+
+OUTPUT
+
+Update:
+
+06_BUSINESS_LOGIC_DEEP_AUDIT.md
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+
+Final report must contain:
+
+A. Audit coverage
+
+What was actually examined.
+
+B. Confirmed gaps
+
+Only evidence-backed gaps.
+
+C. Unknown/unverified areas
+
+Anything that cannot be proven.
+
+D. Missed audit areas
+
+Anything that the previous audit did not cover.
+
+E. Possible false positives
+
+Findings that require reconciliation.
+
+F. Possible missed gaps
+
+Newly discovered concerns.
+
+G. Additional audit required
+
+State exactly what remains incomplete.
+
+H. Code-change confirmation
+
+Confirm that no source, test, configuration, dependency, or build files were changed.
+
+Do not fix anything.
