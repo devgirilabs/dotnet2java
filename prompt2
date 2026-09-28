@@ -1,164 +1,193 @@
-Continue the migration audit.
+DEEP BUSINESS LOGIC AND METHOD-LEVEL AUDIT
+PATHS
 
-Do NOT modify any source code.
-Do NOT fix any gaps.
-Do NOT add functionality.
-Do NOT refactor.
+.NET PROJECT ROOT:
 
-The previous audit documents already exist under:
+<ENTER_ABSOLUTE_PATH_TO_DOTNET_PROJECT>
 
-<migration-audit-directory>
+JAVA PROJECT ROOT:
 
-The .NET application is the source of truth.
-The Java application is the partially migrated target.
+<ENTER_ABSOLUTE_PATH_TO_JAVA_PROJECT>
 
-Now perform a DEEP METHOD-LEVEL AND BUSINESS-LOGIC COMPARISON.
+MIGRATION AUDIT DIRECTORY:
 
-The purpose is to find functionality that may have been missed even when a Java class or method already exists.
+<ENTER_ABSOLUTE_PATH_TO_EXISTING_MIGRATION_AUDIT_DIRECTORY>
+EXISTING AUDIT DOCUMENTS
 
-For every significant .NET business/service method that has a Java counterpart:
+Read these before starting:
 
-1. Read the complete .NET method.
-2. Read the complete Java counterpart.
-3. Trace methods called by both implementations when necessary.
-4. Compare the actual execution logic.
+01_PROJECT_INVENTORY.md
+02_DOTNET_TO_JAVA_TRACEABILITY.md
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
+TASK
 
-Check every:
+Perform a deep method-level business logic comparison between the .NET golden/reference implementation and the Java migration.
 
-* if condition
-* else branch
-* switch case
-* loop
-* early return
-* validation
-* null check
-* empty check
-* default value
-* calculation
-* conversion
-* mapping
-* filtering
-* sorting
-* collection handling
-* database operation
-* transaction
-* external call
-* retry
-* timeout
-* exception
-* catch block
-* fallback
-* state change
-* configuration-dependent behavior
+Do not rely on the previous traceability document alone. Verify findings against the actual source code.
 
-Do not assume two pieces of code are equivalent because they look similar.
+Audit:
 
-For example, if .NET has:
+controllers
+API handlers
+application services
+business services
+managers
+processors
+handlers
+workflows
+domain logic
+validators
+repositories where business behavior depends on them
+database-related business logic
+integrations
+message/event processing
+background logic
+scheduled logic
 
-condition A
--> operation X
-condition B
--> operation Y
-otherwise
--> operation Z
+For every significant method, compare:
 
-and Java only implements X and Y, report Z as missing.
+input parameters
+output/result
+object creation
+object mutation
+state changes
+validation
+conditional branches
+loops
+early returns
+filtering
+sorting
+mapping
+transformations
+calculations
+rounding
+conversions
+string handling
+null handling
+empty values
+default values
+collection behavior
+duplicate handling
+ordering
+missing-data behavior
+database operations
+transaction behavior
+external calls
+request construction
+response processing
+retry behavior
+timeout behavior
+exception handling
+fallback behavior
+configuration-dependent behavior
+feature flags
+authorization checks
+asynchronous behavior
+messaging/events
+state transitions
+side effects
 
-Also check for behavior hidden in:
+Trace all supporting behavior through:
 
-* helper methods
-* utility classes
-* extension methods
-* base classes
-* interfaces
-* overridden methods
-* callbacks
-* delegates
-* event handlers
-* middleware
-* filters
-* attributes
-* dependency injection registrations
+helper methods
+utility classes
+base classes
+inherited methods
+interfaces
+implementations
+overridden methods
+extension methods
+static utilities
+callbacks
+event handlers
+middleware
+filters
+interceptors
+dependency injection
+shared/common modules
 
-Trace the actual call chain when required.
+Check these execution paths:
 
-IMPORTANT:
+normal success
+validation failure
+null input
+empty input
+missing data
+invalid data
+duplicate data
+partial data
+database failure
+external-service failure
+timeout
+exception
+retry
+fallback
+no-result
+authorization failure
+configuration/feature-flag variations
+asynchronous/event/message paths
+state transitions
 
-Do not only compare method names or class names.
+Compare in both directions.
 
-Compare behavior.
+Identify:
 
-==================================================
+.NET behavior missing from Java
+Java behavior not present in .NET
+behavior that differs
+behavior that is only partially migrated
+behavior that cannot yet be verified
+
+Use only:
+
+MATCH
+PARTIAL
+MISSING
+DIFFERENT
+UNKNOWN
+
+Do not guess.
+
 OUTPUT
-======
 
 Create:
 
-<migration-audit-directory>/06_BUSINESS_LOGIC_DEEP_AUDIT.md
+06_BUSINESS_LOGIC_DEEP_AUDIT.md
 
-For every finding use:
+Update:
 
-ID:
-BL-GAP-XXXX
+03_GAP_REGISTER.md
+04_UNKNOWN_REGISTER.md
+05_MIGRATION_AUDIT_SUMMARY.md
 
-.NET LOCATION:
-file/class/method
+For every confirmed difference include:
 
-JAVA LOCATION:
-file/class/method
-
-.NET BEHAVIOR:
-Describe exactly what the .NET code does.
-
-JAVA BEHAVIOR:
-Describe exactly what the Java code does.
-
-DIFFERENCE:
-Describe the exact behavioral difference.
-
-IMPACT:
-Describe when this difference occurs.
-
-EVIDENCE:
-Reference the relevant source code.
-
-STATUS:
-CONFIRMED GAP / MATCH / UNKNOWN
-
-==================================================
-IMPORTANT
-=========
+Gap ID
+.NET file/class/method
+Java file/class/method
+.NET behavior
+Java behavior
+exact difference
+evidence
+affected flow
+impact
+confidence
 
 Do not fix anything.
 
-Do not change either project.
+Final report must include:
 
-Do not assume missing behavior.
-
-If you cannot establish equivalence, mark:
-
-UNKNOWN — REQUIRES VERIFICATION
-
-At the end, update:
-
-<migration-audit-directory>/03_GAP_REGISTER.md
-
-with ONLY newly confirmed gaps.
-
-Also update:
-
-<migration-audit-directory>/04_UNKNOWN_REGISTER.md
-
-with newly discovered unknowns.
-
-Do not remove existing findings from those documents.
-
-Finally provide a short summary:
-
-* methods compared
-* methods with confirmed matches
-* partial implementations
-* missing implementations
-* different implementations
-* unknowns
-* newly discovered gaps
+methods examined
+Java counterparts identified
+MATCH count
+PARTIAL count
+MISSING count
+DIFFERENT count
+UNKNOWN count
+confirmed gaps
+unknowns
+incomplete areas
+whether another business-logic audit pass is required
+confirmation that no source/test/config/dependency/build files were modified
