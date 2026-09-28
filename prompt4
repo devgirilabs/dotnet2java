@@ -24,90 +24,63 @@ Read:
 06_BUSINESS_LOGIC_DEEP_AUDIT.md
 TASK
 
-Perform a complete API and interface compatibility audit.
+Perform a complete API/interface compatibility audit.
 
 The .NET API/interface behavior is the reference.
 
-Compare every externally exposed or internally consumed contract between .NET and Java.
+Explicitly identify APIs that control or expose:
 
-Identify:
+database migration
+migration status
+migration version
+database creation
+database initialization
+schema upgrades
+purge
+cleanup
+retention
+archival
+database validation
+operation status
+migration progress
+error/status reporting
 
-REST endpoints
-HTTP methods
-URLs/paths
+Compare every API/interface:
+
+HTTP method
+URL/path
 path parameters
 query parameters
-request bodies
-request DTOs
-response DTOs
+request body
+request fields
+response fields
+field types
+nullable behavior
+default values
 headers
-content types
+content type
 serialization
 deserialization
-status codes
 validation
-required fields
-optional fields
-null handling
-empty handling
-default values
-error responses
-exception-to-response mapping
+status codes
+error payloads
+exception mapping
+authentication
+authorization
 pagination
 filtering
 sorting
-ordering
-authentication requirements
-authorization requirements
-idempotency behavior where relevant
-versioning
-backward compatibility
-callbacks
-webhooks
-internal interfaces
-generated clients/contracts where applicable
-
-For every API compare:
-
-existence
-HTTP method
-URL
-request contract
-response contract
-field names
-field types
-nullable behavior
-default behavior
-validation
-authentication
-authorization
-success status
-failure status
-error payload
-exception behavior
-business logic invoked
+idempotency
 side effects
 transaction behavior
-external calls
-serialization behavior
+operation state
 
 Check both directions:
 
 .NET API missing in Java
-Java API not present in .NET
-same API but different behavior
-same API but incompatible request/response contract
-
-Do not classify something as MATCH merely because the endpoint exists.
-
-Use:
-
-MATCH
-PARTIAL
-MISSING
-DIFFERENT
-UNKNOWN
-OUTPUT
+Java-only API
+same API with different contract
+same API with different behavior
 
 Create:
 
@@ -119,18 +92,17 @@ Update:
 04_UNKNOWN_REGISTER.md
 05_MIGRATION_AUDIT_SUMMARY.md
 
-For every gap provide exact evidence.
+Do not modify source, tests, configuration, dependencies, or API contracts.
 
-Do not change source, tests, configuration, dependencies, build files, or API contracts.
+Final response must include:
 
-Final response must summarize:
-
-total APIs/interfaces identified
+APIs/interfaces identified
+migration-related APIs
+purge/cleanup APIs
 mapped APIs
 missing APIs
-different contracts
-different behavior
+contract differences
+behavior differences
 unknowns
-incomplete areas
-critical API gaps
+confirmed gaps
 confirmation that no changes were made
