@@ -1,4 +1,4 @@
-DEEP BUSINESS LOGIC AND METHOD-LEVEL AUDIT
+DEEP BUSINESS LOGIC AND DATABASE LIFECYCLE AUDIT
 PATHS
 
 .NET PROJECT ROOT:
@@ -14,7 +14,7 @@ MIGRATION AUDIT DIRECTORY:
 <ENTER_ABSOLUTE_PATH_TO_EXISTING_MIGRATION_AUDIT_DIRECTORY>
 EXISTING AUDIT DOCUMENTS
 
-Read these before starting:
+Read:
 
 01_PROJECT_INVENTORY.md
 02_DOTNET_TO_JAVA_TRACEABILITY.md
@@ -23,38 +23,83 @@ Read these before starting:
 05_MIGRATION_AUDIT_SUMMARY.md
 TASK
 
-Perform a deep method-level business logic comparison between the .NET golden/reference implementation and the Java migration.
+Perform a deep method-level business logic comparison between the .NET golden/reference application and the Java migration.
 
-Do not rely on the previous traceability document alone. Verify findings against the actual source code.
+For this application, database lifecycle behavior is core business logic.
 
-Audit:
+Therefore explicitly audit every method involved in:
+
+Database migration
+migration initiation
+migration sequencing
+migration version selection
+version detection
+version comparison
+migration ordering
+dependency handling
+pre-migration checks
+migration execution
+data transformation
+post-migration validation
+migration completion
+migration state tracking
+migration failure
+retry
+resume
+rollback/recovery
+Database lifecycle
+database creation
+database initialization
+schema creation
+schema upgrades
+schema validation
+database version tracking
+database state transitions
+database selection/routing
+Purging and cleanup
+purge initiation
+retention calculation
+records selected for purge
+filtering rules
+deletion ordering
+batch size
+batch processing
+cleanup rules
+archival rules
+duplicate handling
+partial cleanup
+retry
+resume
+cleanup completion
+cleanup failure
+General business behavior
+
+Also audit:
 
 controllers
-API handlers
-application services
+services
 business services
 managers
 processors
 handlers
 workflows
-domain logic
 validators
 repositories where business behavior depends on them
-database-related business logic
 integrations
-message/event processing
+messaging
+events
 background logic
 scheduled logic
 
-For every significant method, compare:
+For every significant method compare:
 
-input parameters
-output/result
+inputs
+outputs
 object creation
 object mutation
 state changes
 validation
-conditional branches
+conditionals
 loops
 early returns
 filtering
@@ -64,32 +109,36 @@ transformations
 calculations
 rounding
 conversions
-string handling
+strings
 null handling
-empty values
-default values
+empty handling
+default handling
 collection behavior
-duplicate handling
+duplicate behavior
 ordering
-missing-data behavior
-database operations
-transaction behavior
+missing-data handling
+SQL/database operations
+transactions
+commit
+rollback
+locking
+concurrency
 external calls
 request construction
-response processing
-retry behavior
-timeout behavior
+response handling
+retry
+timeout
 exception handling
-fallback behavior
-configuration-dependent behavior
+fallback
+configuration
 feature flags
-authorization checks
+authorization
 asynchronous behavior
-messaging/events
+messages/events
 state transitions
 side effects
 
-Trace all supporting behavior through:
+Trace:
 
 helper methods
 utility classes
@@ -97,7 +146,7 @@ base classes
 inherited methods
 interfaces
 implementations
-overridden methods
+overrides
 extension methods
 static utilities
 callbacks
@@ -106,51 +155,52 @@ middleware
 filters
 interceptors
 dependency injection
-shared/common modules
+shared modules
+SQL scripts
+migration scripts
+stored procedures/functions/triggers where applicable
+REQUIRED SCENARIOS
 
-Check these execution paths:
+Check at minimum:
 
-normal success
-validation failure
-null input
-empty input
+successful migration
+migration with existing database
+migration from each relevant version
+migration with missing/invalid version
+migration failure
+migration rollback/recovery
+migration retry
+migration resume
+partial migration
+schema validation failure
+data transformation failure
+database connection failure
+database timeout
+database already exists
+database does not exist
+successful purge
+retention-based purge
+empty purge result
+partial purge
+purge failure
+purge retry
+duplicate data
 missing data
 invalid data
-duplicate data
-partial data
-database failure
-external-service failure
-timeout
-exception
-retry
-fallback
-no-result
+concurrent database operation
 authorization failure
-configuration/feature-flag variations
-asynchronous/event/message paths
-state transitions
+configuration-dependent behavior
+scheduled/background execution
 
-Compare in both directions.
+Compare both directions.
 
 Identify:
 
 .NET behavior missing from Java
 Java behavior not present in .NET
-behavior that differs
-behavior that is only partially migrated
+different behavior
+partially migrated behavior
 behavior that cannot yet be verified
-
-Use only:
-
-MATCH
-PARTIAL
-MISSING
-DIFFERENT
-UNKNOWN
-
-Do not guess.
-
-OUTPUT
 
 Create:
 
@@ -162,25 +212,29 @@ Update:
 04_UNKNOWN_REGISTER.md
 05_MIGRATION_AUDIT_SUMMARY.md
 
-For every confirmed difference include:
+For every confirmed gap include:
 
 Gap ID
+category
 .NET file/class/method
 Java file/class/method
 .NET behavior
 Java behavior
 exact difference
 evidence
-affected flow
+affected scenario
 impact
 confidence
 
 Do not fix anything.
 
-Final report must include:
+Final response must include:
 
 methods examined
-Java counterparts identified
+database lifecycle methods examined
+migration flows examined
+purge/cleanup flows examined
+Java counterparts
 MATCH count
 PARTIAL count
 MISSING count
@@ -189,5 +243,5 @@ UNKNOWN count
 confirmed gaps
 unknowns
 incomplete areas
-whether another business-logic audit pass is required
-confirmation that no source/test/config/dependency/build files were modified
+whether another audit pass is required
+confirmation that no source/test/config/dependency/build/database/deployment files were modified
